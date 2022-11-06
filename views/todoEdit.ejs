@@ -35,6 +35,21 @@
         <div class="card" style="width: 18rem">
           <ul class="list-group list-group-flush">
             <% todotasks.forEach(tasks =>{ %>
+                <% if(tasks._id == idTask){ %>
+                    <li class="list-group-item">
+                        <form action="/update/<%=tasks._id%>?_method=PUT" method="POST">
+                            <input type="text" value="<%=tasks.title %>" name="title">
+                            <!-- accept changes -->
+                  <button type="submit" class="btn btn-primary">
+                    accept
+                  </button>
+                  <!--cancel the changes -->
+                  <a style="text-decoration: none;" href="/" >
+                    cancel
+                  </a>
+                        </form>
+                    </li>
+                <%} else {%>    
             <li class="list-group-item">
               <%= tasks.title %>
               <!-- update task -->
@@ -45,11 +60,11 @@
                   >update</a
                 >
               </button>
-
+              
               <!-- delete task -->
               <a href="/delete/<%=tasks._id%>?_method=delete">delete</a>
             </li>
-
+            <%}%>
             <% })%>
           </ul>
         </div>
