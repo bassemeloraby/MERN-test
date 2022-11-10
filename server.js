@@ -1,14 +1,20 @@
 const express = require('express');
-const app = express();
+
+const cors = require('cors')
 const mongoose = require('mongoose');
 
+const app = express();
 const methodOverride = require('method-override');
 const { render } = require('ejs');
+
+require('dotenv').config()
 //Lets you use HTTP verbs such as PUT or DELETE in places
 // where the client doesn't support it.
 
-app.use(express.urlencoded({ extended: true }));
 
+app.use(cors())
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json())
 app.use(methodOverride('_method', { methods: ['POST', 'GET'] }));
 
 // set the view engine to ejs
@@ -18,9 +24,13 @@ app.use(express.static('public'))
 
 const port = process.env.PORT || '3000';
 
+
 //mongoodb.connect
+const uri = process.env.ATLAS_URI
+
+
 mongoose.connect(
-  `mongodb://localhost:27017/MERN`,
+  uri,
   { useNewUrlParser: true, useUnifiedTopology: true },
   (err) => {
     console.log('connected');
